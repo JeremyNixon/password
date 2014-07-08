@@ -29,29 +29,21 @@ date_default_timezone_set ('america/new_york');
             Include a number?<br>
             <input type="radio" name="number" value="1">Yes<br>
             <input type="radio" name="number" value="0">No<br><br>
+            Spaces or Hyphens?<br>   
+            <input type="radio" name="space" value="1">Spaces<br>
+            <input type="radio" name="space" value="0">Hyphens<br><br>
             <input type="submit" name="submit" method="submit">
         </form>
 
-        <p>This app will generate an "XKCD Password" - a password that will string common words together at random. Feel free to add a symbol or number.<p>
+        <p>This app will generate an "XKCD Password" - a password that will string common words together at random. 
+            Using many letters will make the password more difficult for a comupter to creack. Making the words common 
+            will make the password easy for you to remember. Feel free to add a symbol or number!<p>
 
         <?php } else {
         ?>
-        <form method="POST" action="index.php">
-            Number of Words in Password: 
-            <input type="text" name="passwordlength" size='3'><br><br>
-            Make the first letter uppercase?<br>   
-            <input type="radio" name="case" value="1">Yes<br>
-            <input type="radio" name="case" value="0">No<br><br>
-            Include a symbol?<br>   
-            <input type="radio" name="symbol" value="1">Yes<br>
-            <input type="radio" name="symbol" value="0">No<br><br>
-            Include a number?<br>
-            <input type="radio" name="number" value="1">Yes<br>
-            <input type="radio" name="number" value="0">No<br><br>
-            <input type="submit" name="submit" method="submit"><br><br>
-        </form>
+        
 
-        <h2> Password: </h2>
+        <br><br><h2> Password: </h2>
 
 
         <?php
@@ -62,6 +54,7 @@ date_default_timezone_set ('america/new_york');
         $s = $_POST['symbol'];
         $n = $_POST['number'];
         $c = $_POST['case'];
+        $h = $_POST['space'];
         $data = file('common.ini');
         $dictionary = $data;
         $data = file('symbol.ini');
@@ -83,7 +76,13 @@ date_default_timezone_set ('america/new_york');
                 }
 
                 if ($i != ($passwordlength - 1)){
-                    //echo "- ";
+                    if ($h){
+                        echo " ";
+                    }
+                        else{
+                        echo "- ";
+                    }                            
+                        
                 }
             }
             if($s){
@@ -97,9 +96,33 @@ date_default_timezone_set ('america/new_york');
             $passwordnumber[0] = $numbers[$r];
             echo $passwordnumber[0];
             }
+
+            ?>
+            <br><br><br><br>
+            <form method="POST" action="index.php">
+            Number of Words in Password: 
+            <input type="text" name="passwordlength" size='3'><br><br>
+            Make the first letter uppercase?<br>   
+            <input type="radio" name="case" value="1">Yes<br>
+            <input type="radio" name="case" value="0">No<br><br>
+            Include a symbol?<br>   
+            <input type="radio" name="symbol" value="1">Yes<br>
+            <input type="radio" name="symbol" value="0">No<br><br>
+            Include a number?<br>
+            <input type="radio" name="number" value="1">Yes<br>
+            <input type="radio" name="number" value="0">No<br><br>
+            Spaces or Hyphens?<br>   
+            <input type="radio" name="space" value="1">Spaces<br>
+            <input type="radio" name="space" value="0">Hyphens<br><br>
+            <input type="submit" name="submit" method="submit"><br><br>
+        </form>
+        <?php
         }
         echo "<br><br>";
         ?>
+
+
+
         <img id="xkcd" src="http://imgs.xkcd.com/comics/password_strength.png">
 
     </body>
