@@ -9,32 +9,59 @@ date_default_timezone_set ('america/new_york');
 <html>
     <head>
         <title>Password Generator</title>
-        <style>
+        <link rel="stylesheet" type="text/css" href="style.css">
 
-        </style>
     </head>
     <body>
 
-
+        <h2>XKCD-Style Password Generator</h2>
         <?php if (!isset($_POST['submit'])) {?>
 
         <form method="POST" action="index.php">
             Number of Words in Password: 
-            <input type="text" name="passwordlength" size='3'><br>
-            <input type="radio" name="symbol" value="1">Include a symbol.<br>
-            <input type="radio" name="symbol" value="0">No symbol.<br>
-
-            <input type="radio" name="number" value="1">Include a number.<br>
-            <input type="radio" name="number" value="0">No number.<br>
+            <input type="text" name="passwordlength" size='3'><br><br>
+            Make the first letter uppercase?<br>   
+            <input type="radio" name="case" value="1">Yes<br>
+            <input type="radio" name="case" value="0">No<br><br>
+            Include a symbol?<br>   
+            <input type="radio" name="symbol" value="1">Yes<br>
+            <input type="radio" name="symbol" value="0">No<br><br>
+            Include a number?<br>
+            <input type="radio" name="number" value="1">Yes<br>
+            <input type="radio" name="number" value="0">No<br><br>
             <input type="submit" name="submit" method="submit">
         </form>
 
+        <p>This app will generate an "XKCD Password" - a password that will string common words together at random. Feel free to add a symbol or number.<p>
+
         <?php } else {
+        ?>
+        <form method="POST" action="index.php">
+            Number of Words in Password: 
+            <input type="text" name="passwordlength" size='3'><br><br>
+            Make the first letter uppercase?<br>   
+            <input type="radio" name="case" value="1">Yes<br>
+            <input type="radio" name="case" value="0">No<br><br>
+            Include a symbol?<br>   
+            <input type="radio" name="symbol" value="1">Yes<br>
+            <input type="radio" name="symbol" value="0">No<br><br>
+            Include a number?<br>
+            <input type="radio" name="number" value="1">Yes<br>
+            <input type="radio" name="number" value="0">No<br><br>
+            <input type="submit" name="submit" method="submit"><br><br>
+        </form>
+
+        <h2> Password: </h2>
+
+
+        <?php
+
 
         $s = $n = 1;
         $passwordlength = (int)$_POST['passwordlength'];
         $s = $_POST['symbol'];
         $n = $_POST['number'];
+        $c = $_POST['case'];
         $data = file('common.ini');
         $dictionary = $data;
         $data = file('symbol.ini');
@@ -48,10 +75,15 @@ date_default_timezone_set ('america/new_york');
 
                 $r = rand(0,count($dictionary)-1);
                 $passwordarray[$i] = $dictionary[$r];
-                echo $passwordarray[$i];
+                if($i==0 && $c){
+                echo ucfirst($passwordarray[$i]);
+                }
+                else {
+                    echo ($passwordarray[$i]);
+                }
 
                 if ($i != ($passwordlength - 1)){
-                    echo "- ";
+                    //echo "- ";
                 }
             }
             if($s){
@@ -66,6 +98,9 @@ date_default_timezone_set ('america/new_york');
             echo $passwordnumber[0];
             }
         }
+        echo "<br><br>";
         ?>
+        <img id="xkcd" src="http://imgs.xkcd.com/comics/password_strength.png">
+
     </body>
 </html>
