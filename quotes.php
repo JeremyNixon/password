@@ -25,6 +25,8 @@ date_default_timezone_set ('america/new_york');
     <body>
         <?php if (!isset($_POST['submit'])) {?>
 
+        <h3>This site will randomly generate impressive quotes from the world's most famous philosophers.</h3><br><br><br>
+
         <form method="POST" action="quotes.php">  
 			<input type="hidden" name="case" value="Nietzsche">
             <input type="submit" name="submit" method="submit" value="Nietzsche">
